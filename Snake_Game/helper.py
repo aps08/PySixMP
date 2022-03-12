@@ -1,3 +1,4 @@
+from encodings import utf_8
 from turtle import Turtle
 import random
 
@@ -35,16 +36,18 @@ class Snake:
             self.add_segment(tp)
 
     def add_segment(self, position: tuple) -> None:
-        Obj = Turtle(shape="square")
+        Obj = Turtle(shape="square", visible=False)
         Obj.penup()
+        Obj.color("green")
         Obj.goto(position)
-        Obj.color("white")
+        Obj.showturtle()
         self.__segments.append(Obj)
 
     def move_snake(self) -> None:
         for seg in range(len(self.__segments) - 1, 0, -1):
             x = self.__segments[seg - 1].xcor()
             y = self.__segments[seg - 1].ycor()
+            self.__segments[seg].color("lightgreen")
             self.__segments[seg].goto(x=x, y=y)
         self.__segments[0].forward(self.__MOVE_DISTANCE)
 
@@ -94,7 +97,7 @@ class Food(Turtle):
         self.shape("circle")
         self.penup()
         self.shapesize(stretch_len=0.5, stretch_wid=0.5)
-        self.color("blue")
+        self.color("red")
         self.speed("fastest")
         self.next_food()
 
@@ -111,24 +114,57 @@ class ScoreBoard(Turtle):
     1. __init__ --> Contructor.
     2. write_score() --> Write the scoreboard on the screen.
     3. game_over() --> shows game over message once the game has ended.
+    4. get_score() --> returnt the score of the user.
     """
     
-    def __init__(self) -> None:
+    def __init__(self, highcore: int) -> None:
         super().__init__()
         self.__score = -10
         self.__FONT = ("Courier", 12, "bold")
         self.color("white")
         self.hideturtle()
         self.penup()
-        self.goto(x=0, y=280)
-        self.write_score()
+        self.goto(x=0, y=260)
+        self.write_score(highcore)
 
-    def write_score(self) -> None:
+    def write_score(self, score: int) -> None:
         self.clear()
         self.__score += 10
-        self.write(f'SCORE : {self.__score}', move=False, align="Center", font=self.__FONT)
+        self.write(f'SCORE : {self.__score}\nHighest Score : {score}', move=False, align="Center", font=self.__FONT)
 
     def game_over(self) -> None:
-        self.clear()
         self.goto(0, 0)
-        self.write(f'GAME OVER YOUR SCORE WAS : {self.__score} \nClosing windows in 3 seconds', move=False, align="Center", font=self.__FONT)
+        self.write(f'GAME OVER YOUR SCORE WAS : {self.__score} \nClosing windows in 5 seconds', move=False, align="Center", font=self.__FONT)
+
+    def get_score(self) -> None:
+        return self.__score
+
+class Highscore:
+    """
+    Summary of the class:
+    This class is responsible for creating a file and updating the high score when actived by user. 
+
+    Funcions and uses:
+    1. __init__ --> Contructor. Create the file is not present and loads data, and get the high score if the file is presents.
+    2. get_highscore() --> return the highest score for comparison.
+    3. update_score() --> overrides the highscore if new highscore is achieved.
+    """
+
+    def __init__(self) -> None:
+        self._data = None
+        try :
+            with open("Snake_Game/high_score.txt", mode="r", encoding="utf-8") as f:
+                self._data = f.read()
+        except :
+            with open("Snake_Game/high_score.txt", mode="w+", encoding="utf-8") as f:
+                f.write("50")
+                self._data = 50
+        f.close()
+        
+    def get_highscore(self) -> int:
+        return int(self._data)
+
+    def update_score(self, highscore: int) -> None:
+        with open("Snake_Game/high_score.txt", mode="w", encoding="utf-8") as f:
+            f.write(f'{highscore}')
+            f.close()
