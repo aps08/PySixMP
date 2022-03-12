@@ -5,7 +5,6 @@ PROMPT_TEXT = "Enter number of times you want to run the lines.\nDefault value:5
 FONT = ("Courier", 12, "bold")
 X = 400.0
 Y = 300.0
-# Add angles and forwrad_by to change the angle of the turtle and forward distance respectively.
 ANGLES = [0, 90, 180, 270]
 FORWARD_BY = [30, 50, 70]
 
