@@ -1,5 +1,6 @@
-from turtle import Turtle, Screen, numinput
-import random
+from tkinter import TclError
+from turtle import Terminator, Turtle, Screen, numinput
+import random, time
 
 PROMPT_TEXT = "Enter number of times you want to run the lines.\nDefault value:50"
 FONT = ("Courier", 12, "bold")
@@ -49,6 +50,13 @@ class confused_lines(Turtle):
             self.color(['#%06X' % random.randint(0, 0xFFFFFF) for i in range(1)][0])
             self.right(random.choice(ANGLES))
             self.forward(random.choice(FORWARD_BY))
+        self.clear()
+        self.penup()
+        self.home()
+        self.pendown()
+        self.pencolor("white")
+        self.write("Closing window in 3 seconds", align="center", font=FONT)
+        time.sleep(3)
 
     def mirror(self) -> None:
         if self.xcor() < -X:
@@ -71,4 +79,8 @@ class confused_lines(Turtle):
 
 if __name__ == "__main__":
     print("Running.......")
-    App = confused_lines()
+    try:
+        App = confused_lines()
+        print("Closing screen")
+    except Terminator:
+        print("Forced Stop")

@@ -1,4 +1,4 @@
-from turtle import Screen
+from turtle import Screen, Terminator
 from helper import Snake, ScoreBoard, Food, Highscore
 import time
 
@@ -77,4 +77,8 @@ class Snake_Game:
 
 if __name__ == "__main__":
     print("Running...")
-    Snake = Snake_Game()
+    try:
+        Snake = Snake_Game()
+        print("Closing screen")
+    except Terminator:
+        print("Forced Stop")
