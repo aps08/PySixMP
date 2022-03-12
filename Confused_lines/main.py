@@ -10,11 +10,12 @@ FORWARD_BY = [30, 50, 70]
 
 class confused_lines(Turtle):
     """
+    Summary of the class:
     This class is responsible for runnig the confused lines and inherits the turtle object.
 
-    All the functions in this call and there uses:
-    1. __init__ --> Constructor. Creates the screen and takes the input from user.
-    2. write_instructions --> responsible for showing text on the screen.
+    Funcions and uses:
+    1. __init__() --> Constructor. Creates the screen and takes the input from user.
+    2. write_instructions() --> responsible for showing text on the screen.
     3. run() --> run the loop N times, which is taken from the user, by default the value is 50.
     4. mirror() --> responsible for mirroring the turtle.
     """
