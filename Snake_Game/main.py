@@ -1,4 +1,3 @@
-from msilib.schema import Font
 from turtle import Screen
 from helper import Snake, ScoreBoard, Food, Highscore
 import time
