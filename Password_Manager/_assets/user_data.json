@@ -2,9 +2,5 @@
    "defaultdomain.com": {
       "email": "defaultemail@email.com",
       "password": "defaultpassword"
-   },
-   "amazon.com": {
-      "email": "defaultemail@gmail.com",
-      "password": "n~Ga$t4O1p2/"
    }
 }
