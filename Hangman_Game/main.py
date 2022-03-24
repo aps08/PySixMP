@@ -5,6 +5,56 @@ import os
 import time
 import msvcrt as m
 
+HANGMANPICS = ['''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========''']
 WORD_LIST = ['horse','door','song','rip','backbone','bomb','whisk','frog','lawnmower','mattress','pinwheel','cake','circus','battery','mailman','cowboy','password','bicycle',
         'skate','electricity','lightsaber','thief','teapot','deep','spring','nature','shallow','toast','outside','America','roller','blading','gingerbread','man','bowtie',
         'half','spare','wax','light','bulb','platypus','music''treasure','garbage','park','pirate','ski','state','whistle','palace','baseball','coal','queen','dominoes',
@@ -15,7 +65,7 @@ class Hangman:
         self._dictionary = PyDictionary()
         self._word = random.choice(WORD_LIST).lower()
         self._chances = ["💚"]*7
-        self._blanks = "_ "*len(self._word)
+        self._blanks = [" _ "]*len(self._word)
         self._clear = lambda: os.system('cls')
         self._used_alphabets = []
         self._give_hint = None
@@ -48,46 +98,64 @@ class Hangman:
                     self._give_hint = self._dictionary.meaning(self._word)["Noun"][0]
                 except:
                     self._give_hint = "No hint found."
+                finally:
+                    self._chances.pop()
         elif user_entry.isalpha():
-            user_entry = user_entry.lower()
-            if user_entry in self._used_alphabets:
-                print("\nYou have already used this letter. Try again.")
-                time.sleep(2)
-            elif user_entry in self._word:
-                for index, value in enumerate(self._word):
-                    if user_entry == value:
-                        self._blanks = self._blanks[0:index] + user_entry + self._blanks[index+1:]
-                if user_entry not in self._used_alphabets:
-                    self._used_alphabets.append(user_entry)
-                print("\nCorrect guess.")
-            else:
-                if user_entry not in self._used_alphabets:
-                    self._used_alphabets.append(user_entry)
-                print("\nIncorrect. Life Lost ")
-                self._chances.pop()
-                            
+            self.replace_blank(user_entry)
+        if self._word.lower() == (''.join(self._blanks)).lower():
+            self._clear()
+            print(f"The word was {self._word.upper()}")
+            print(f"You Won!!!! with {len(self._chances)} lives left.")
+            self.retry()
+                
+                
+    def replace_blank(self, user_entry: str) -> None:
+        user_entry = user_entry.lower()
+        if user_entry in self._used_alphabets:
+            print("\nYou have already used this letter. Try again.")
+            time.sleep(1)
+        elif user_entry in self._word:
+            for i in range(len(self._word)):
+                if user_entry == self._word[i]:
+                    self._blanks[i] = user_entry
+            if user_entry not in self._used_alphabets:
+                self._used_alphabets.append(user_entry)
+            print("\nCorrect guess.")
+        else:
+            if user_entry not in self._used_alphabets:
+                self._used_alphabets.append(user_entry)
+            print("\nIncorrect. Life Lost ")
+            self._chances.pop()                       
         
     def start(self) -> None:
         while len(self._chances) > 0:
             self._clear()
+            print(HANGMANPICS[7-len(self._chances)])
             print(f"\nLifes left : {self._chances}")
-            print(f"Guess the word: {self._blanks}")
+            print(f"Guess the word: {''.join(self._blanks)}")
             if self._used_alphabets:
                 print(f"Used alhpabets : {self._used_alphabets} ")
             if self._give_hint:
                 print(f'HINT: {self._give_hint}')
                 print("Enter you alphabets here: ")
             else:
-                print("Enter you alphabets here or 0 for a hint : ")
+                print("Enter you alphabets here or 0 for a hint, which will reduce one life : ")
             user_guess = m.getwche()
             self.validate_anwer(user_guess)
             time.sleep(1)
         self.game_over()
         
     def game_over(self) -> None:
-        print(self._word)
-        print("Game over")
+        self._clear
+        print("Game over, all lifes lost. You are hanged.")
+        print(f"The correct word was:  {self._word.upper()}")
+        self.retry()
+        
+    def retry(self) -> None:
+        print("Do you want to retry ?\n1. Y for YES\n2. Anyother key for NO")
+        user_retry = m.getwche()
+        self.__init__() if user_retry.upper() == "Y" else sys.exit(0)
     
 if __name__ == "__main__":
     print("Starting the game...")
-    Hangman = Hangman()
+    H = Hangman()
