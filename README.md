@@ -1,2 +1,3 @@
 # py25
-A repository which contains 25 python projects.
+# Documentation not completed
+# 7 completed
