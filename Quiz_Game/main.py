@@ -1,13 +1,7 @@
-import imp
 import requests
-from tkinter import *
-
-class Quiz_Game:
-    def __init__(self) -> None:
-        pass
-    def start(self) -> None:
-        pass
-    
-if __name__ == "__main__":
-    print("Running......")
-    Quiz_Game.start()
+from ui_model import *
+json_data = requests.get("https://opentdb.com/api.php?amount=10").json()["results"]
+question_bank = [Question_Model(question=data["question"], correct=data["correct_answer"],
+                                incorrect=data["incorrect_answers"]) for data in json_data]
+Q = Quiz_brain(question_bank)
+Q_ui = Interface(Q)
