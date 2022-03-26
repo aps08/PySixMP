@@ -2,9 +2,13 @@ import constants as C
 
 
 class Hangman:
-    """_summary_
+    """
+    This class is responsible for runnig the Hangman game.
     """
     def __init__(self) -> None:
+        """ __init__() --> This is a construtor, which is responsible for creating objects and variables,
+                            which will help us during the program.
+        """ 
         self._dictionary = C.PyDictionary()
         self._word = C.random_word()
         self._chances = ["💚"]*C.LIFES
@@ -15,6 +19,8 @@ class Hangman:
         self.instructions()
     
     def instructions(self) -> None:
+        """ instructions() --> This function is responsible for showing the menu of the game to user.
+        """
         while True:
             self._clear()
             entry = ""
@@ -35,6 +41,12 @@ class Hangman:
         C.sys.exit() if entry == C.ENTRY[0] else self.start() if entry == C.ENTRY[1] else ''
         
     def validate_anwer(self, user_entry: str) -> None:
+        """ validate_anwer() --> This fucntion is responsible for validating the user input. 
+        
+        Args:
+            user_entry (str): This argument keep the value of user's guessed letter,
+                              on which the validation is performed.
+        """
         if user_entry.isdigit() and self._give_hint is None:
             if user_entry == '0':
                 try:
@@ -52,6 +64,12 @@ class Hangman:
                 
                 
     def replace_blank(self, user_entry: str) -> None:
+        """ replace_blank() --> This function is responsible for replacing the blank wih correct letter,
+                                if the validation result is true.
+        Args:
+            user_entry (str): This argument keep the value of user's guessed letter,
+                              on which the validation is performed.
+        """
         user_entry = user_entry.lower()
         if user_entry in self._used_alphabets:
             print(C.USED_TEXT)
@@ -70,6 +88,8 @@ class Hangman:
             self._chances.pop()                       
         
     def start(self) -> None:
+        """ start() --> This function is responsible for running the game until you have lost all the lifes.
+        """
         while len(self._chances) > 0:
             self._clear()
             print(C.HANGMANPICS[7-len(self._chances)])
@@ -88,12 +108,16 @@ class Hangman:
         self.game_over()
         
     def game_over(self) -> None:
+        """ game_over() -> This function is responsible for showing game over instruction and the correct word.
+        """
         self._clear
         print(C.GO_INSTRUCTION)
         print(f"The correct word was:  {self._word.upper()}")
         self.retry()
         
     def retry(self) -> None:
+        """ retry() --> This function is responsible for checking if the user wants to play again or not.
+        """
         print(C.RETRY_INSTRUCTION)
         user_retry = C.m.getwche()
         self.__init__() if user_retry.upper() == "Y" else C.sys.exit(0)

@@ -1,18 +1,15 @@
 import constants as C
 
+
 class confused_lines(C.Turtle):
     """
-    Summary of the class:
     This class is responsible for runnig the confused lines and inherits the turtle object.
-
-    Funcions and uses:
-    1. __init__() --> Constructor. Creates the screen and takes the input from user.
-    2. write_instructions() --> responsible for showing text on the screen.
-    3. run() --> run the loop N times, which is taken from the user, by default the value is 50.
-    4. mirror() --> responsible for mirroring the turtle, on the opposite side of the wall.
     """
 
     def __init__(self) -> None:
+        """ __init__() --> This is a constructor which is responsible for initializing object, and
+                           creating the interface for the confused lines.
+        """
         super().__init__()
         self.screen = C.Screen()
         self.screen.cv._rootwindow.resizable(False, False)
@@ -24,6 +21,9 @@ class confused_lines(C.Turtle):
         self.run()
 
     def write_instruction(self) -> None:
+        """ write_instruction --> This function is responsibel for writing the instructions,
+                                  on the top of the screen on the start at the start of the screen.
+        """
         self.hideturtle()
         self.pensize(C.PENSIZE)
         self.penup()
@@ -36,6 +36,9 @@ class confused_lines(C.Turtle):
         self.pendown()
 
     def run(self) -> None:
+        """ run() --> This function is repsonsible for running the lines for N number of times
+                      as entered by the user or using the default value.
+        """
         for i in range(self.input):
             self.mirror()
             self.color(['#%06X' % C.random.randint(0, 0xFFFFFF) for i in range(1)][0])
@@ -50,6 +53,9 @@ class confused_lines(C.Turtle):
         C.time.sleep(C.SLEEP_TIME)
 
     def mirror(self) -> None:
+        """ mirror() --> This function is responsible for showing the lines on the 
+                         opposite side of the screen in case it touches, the wall
+        """
         if self.xcor() < -C.X:
             self.penup()
             self.goto(C.X, self.ycor())
