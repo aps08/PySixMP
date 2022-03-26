@@ -1,5 +1,9 @@
+from turtle import Turtle, Screen, numinput
+import random
+import time
+import constants as C
 """
-This file contains some constants which you could use to customize interface and functionality of this code.
+This file contains import statements and some constants which you could use to customize interface and functionality of this code.
 Before reading further, I suggest you to run the code and see how it works.
 """
 

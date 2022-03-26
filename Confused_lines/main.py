@@ -1,9 +1,6 @@
-from turtle import Turtle, Screen, numinput
-import random
-import time
 import constants as C
 
-class confused_lines(Turtle):
+class confused_lines(C.Turtle):
     """
     Summary of the class:
     This class is responsible for runnig the confused lines and inherits the turtle object.
@@ -17,13 +14,13 @@ class confused_lines(Turtle):
 
     def __init__(self) -> None:
         super().__init__()
-        self.screen = Screen()
+        self.screen = C.Screen()
         self.screen.cv._rootwindow.resizable(False, False)
         self.screen.title(C.TITEL_TEXT)
         self.screen.bgcolor(C.BG_COLOR)
         self.screen.setup(width=int(C.X)*2, height=int(C.Y)*2)
         self.write_instruction()
-        self.input = int(numinput(title="Number", prompt=C.PROMPT_TEXT, default=50,minval=50, maxval=9999))
+        self.input = int(C.numinput(title="Number", prompt=C.PROMPT_TEXT, default=50,minval=50, maxval=9999))
         self.run()
 
     def write_instruction(self) -> None:
@@ -41,16 +38,16 @@ class confused_lines(Turtle):
     def run(self) -> None:
         for i in range(self.input):
             self.mirror()
-            self.color(['#%06X' % random.randint(0, 0xFFFFFF) for i in range(1)][0])
-            self.right(random.choice(C.ANGLES))
-            self.forward(random.choice(C.FORWARD_BY))
+            self.color(['#%06X' % C.random.randint(0, 0xFFFFFF) for i in range(1)][0])
+            self.right(C.random.choice(C.ANGLES))
+            self.forward(C.random.choice(C.FORWARD_BY))
         self.clear()
         self.penup()
         self.home()
         self.pendown()
         self.pencolor(C.PEN_COLOR)
         self.write(C.END_INSTRUCTION_TEXT, align="center", font=C.FONT)
-        time.sleep(C.SLEEP_TIME)
+        C.time.sleep(C.SLEEP_TIME)
 
     def mirror(self) -> None:
         if self.xcor() < -C.X:
