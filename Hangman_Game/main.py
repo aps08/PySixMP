@@ -1,6 +1,5 @@
 import constants as C
 
-
 class Hangman:
     """
     This class is responsible for runnig the Hangman game.
