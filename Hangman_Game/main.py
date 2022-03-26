@@ -1,69 +1,16 @@
 import random
-import sys
 from PyDictionary import PyDictionary
 import os
 import time
 import msvcrt as m
+import constants as C
 
-HANGMANPICS = ['''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========''']
-WORD_LIST = ['horse','door','song','rip','backbone','bomb','whisk','frog','lawnmower','mattress','pinwheel','cake','circus','battery','mailman','cowboy','password','bicycle',
-        'skate','electricity','lightsaber','thief','teapot','deep','spring','nature','shallow','toast','outside','America','roller','blading','gingerbread','man','bowtie',
-        'half','spare','wax','light','bulb','platypus','music''treasure','garbage','park','pirate','ski','state','whistle','palace','baseball','coal','queen','dominoes',
-        'photograph','computer','hockey','aircraft','hot','dog','salt','pepper','key','iPad']
+
 
 class Hangman:
     def __init__(self) -> None:
         self._dictionary = PyDictionary()
-        self._word = random.choice(WORD_LIST).lower()
+        self._word = random.choice(C.WORD_LIST).lower()
         self._chances = ["💚"]*7
         self._blanks = [" _ "]*len(self._word)
         self._clear = lambda: os.system('cls')
@@ -130,7 +77,7 @@ class Hangman:
     def start(self) -> None:
         while len(self._chances) > 0:
             self._clear()
-            print(HANGMANPICS[7-len(self._chances)])
+            print(C.HANGMANPICS[7-len(self._chances)])
             print(f"\nLifes left : {self._chances}")
             print(f"Guess the word: {''.join(self._blanks)}")
             if self._used_alphabets:
