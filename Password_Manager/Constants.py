@@ -1,7 +1,16 @@
+from tkinter import *
+from tkinter import messagebox, simpledialog
+import random
+import validators
+import pyperclip
+import json
+import sys
+
 """
 This file contains some constants which you could use to customize interface and functionality of this code.
 Before reading further, I suggest you to run the code and see how it works.
 """
+
 LETTERS = [i for i in 'abcdefghijklmnopqrstuvwxyz']
 UPPER_LETTERS = [i for i in 'abcdefghijklmnopqrstuvwxyz'.upper()]
 NUMBERS = [i for i in "123456789"]

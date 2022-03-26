@@ -1,6 +1,5 @@
 import constants as C
 
-
 class confused_lines(C.Turtle):
     """
     This class is responsible for runnig the confused lines and inherits the turtle object.
