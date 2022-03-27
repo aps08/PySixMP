@@ -4,9 +4,7 @@ class FileOperations:
     def __init__(self) -> None:
         self.PATH = C.FILE_PATH
         self.KEY_PATH = C.SECRET_KEY_PATH
-        self.key = None
         self.create_key()
-        self.F = C.Fernet(self.key)
         
     def create_key(self):
         if not C.os.path.exists(self.KEY_PATH):
@@ -18,6 +16,7 @@ class FileOperations:
             with open(self.KEY_PATH, mode="rb") as ReadFile:
                 self.key = ReadFile.read()
                 ReadFile.close()
+        self.F = C.Fernet(self.key)
         self.create_json_file()
                 
     def create_json_file(self):
@@ -41,7 +40,7 @@ class FileOperations:
             except:
                 Exists, email, password = False, "",""
             ReadFile.close()
-            password = self.F.decrypt(bytes(password, encoding="utf-8"))
+            password = self.decrypt_data(password)
             return Exists, email, password
             
     def already_exists(self, website: str) -> C.Union[bool, dict]:

@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox, simpledialog
 from cryptography.fernet import Fernet
+from typing import Union
 import random
 import validators
 import pyperclip
