@@ -1,5 +1,7 @@
 from tkinter import *
+from tkinter import messagebox
 import random
+import time
 from quiz_brain import Quiz_brain
 
 THEME_COLOR = "#375362"
@@ -9,7 +11,16 @@ FONT_OPTION = "Arial", "10", "bold"
 
 
 class Question_Model:
+    """ This class is responsible for showing storing an instance of question, correct answer and all options.
+    """
     def __init__(self, question: str, correct: str, incorrect: list) -> None:
+        """ __init__() --> This is a constructor responsible for creating the objects, which stores question and answers. 
+
+        Args:
+            question (str): stores the question 
+            correct (str): stores the correct options
+            incorrect (list): stores the incorrect options
+        """
         self.question = question
         self.correct = correct
         self.all_opt = incorrect
@@ -17,8 +28,15 @@ class Question_Model:
 
 
 class Interface:
+    """ This class is responsible for creating the interface for the quiz game.
+    """
 
     def __init__(self, quiz: Quiz_brain) -> None:
+        """ __init__() --> This is a constructor which is responsible for creating the interface as the object is created.
+
+        Args:
+            quiz (Quiz_brain): an object of type quiz_brain
+        """
         self.quiz = quiz
         self._points = 0
         self._window = Tk()
@@ -47,6 +65,9 @@ class Interface:
         self._window.mainloop()
 
     def set_question_answers(self) -> None:
+        """ set_question_answers() --> This function is responsible for setting the question on the interface.
+        """
+        self._canvas.configure(bg="white")
         q_and_a = self.quiz.next_question()
         random.shuffle(q_and_a.all_opt)
         self._canvas.itemconfig(self._question, text=q_and_a.question)
@@ -58,12 +79,18 @@ class Interface:
         except IndexError:
             self.set_question_answers()
 
-    def check(self, user_input) -> None:
+    def check(self, user_input: str) -> None:
+        """ check() --> This function is repsonsible for checking your answer.
+
+        Args:
+            user_input (str): stores the user input.
+        """
         if self.quiz.check_answer(user_input):
-            self._canvas.configure(bg="green")
+            messagebox.showinfo(title="Correct", message="Your answer is correct")
             self._points += 1
             self.quiz.points = self._points
             self._score["text"] = f"Score: {self._points}"
         else:
+            messagebox.showinfo(title="Incorrect", message="Your answer is incorrect")
             self._canvas.configure(bg="red")
-        self._window.after(1000, self.set_question_answers())
+        self.set_question_answers()
