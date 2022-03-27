@@ -2,23 +2,12 @@ from turtle import Screen, Terminator
 from helper import Snake, ScoreBoard, Food, Highscore
 import time
 
-
 class Snake_Game:
-    """
-    Summary of the class:
-    This class contains the game logic, and uses the helper file.
-
-    Funcions and uses:
-    1. __init__ --> Contructor. Create the screen and initialises all the object such as food, snake and scoreboard. 
-    2. run() --> Contains the logic of the game.
-
-    Rules of the Game:
-    1. Each food and get more point. 10 points for each units.
-    2. Game over on wall or tail tough.
-    3. High score will be updated automatically.
-    """
 
     def __init__(self) -> None:
+        """  __init__() --> Contructor. Create the screen and initialises all the object such as food, snake and scoreboard.
+                            It is also responsible for creating the interface for playing the game. 
+        """
         self.screen = Screen()
         self.screen.title("Snake Game")
         self.screen.bgcolor("grey")
@@ -38,6 +27,9 @@ class Snake_Game:
         self.run()
 
     def run(self) -> None:
+        """ run() -->This function Contains the logic of the game. This function uses all the functions define in helper file,
+                    to run the game. Some of the function call includes food, score, game over.
+        """
         while self.game_on:
             self.screen.update()
             time.sleep(0.07)
