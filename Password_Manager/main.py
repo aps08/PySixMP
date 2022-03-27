@@ -1,8 +1,10 @@
 import Constants as C
+from file_operation import FileOperations
 
 class PasswordManager:
     def __init__(self) -> None:
         self.root = C.Tk()
+        self.File_ops = FileOperations()
         self.root.title(C.TITLE)
         self.root.resizable(False, False)
         self.root.config(padx=20, pady=20, bg=C.BG_COLOR)
@@ -51,25 +53,10 @@ class PasswordManager:
         if check_ok:
             confirmation = C.messagebox.askyesno(title="Confirmation", message=f"Are you sure ?\nwebsite: {self.website_entry.get()}\nEmail: {self.email_entry.get()}\nPassword: {self.password_entry.get()}")
             if confirmation:
-                new_data = {self.website_entry.get(): {
-                    "email": self.email_entry.get(),
-                    "password": self.password_entry.get()
-                }}
-                with open(C.FILE_PATH, mode="r") as fr:
-                    data = C.json.load(fr)
-                    global key_present
-                    key_present = None
-                    try:
-                        data[self.website_entry.get()]
-                        key_present = True
-                    except:
-                        key_present = False 
-                    if key_present:
-                        C.messagebox.showerror(title="Error", message=C.DOMAIN_EXISTS_ERROR)
-                    else:
-                        data.update(new_data)
-                        with open(C.FILE_PATH, mode="w") as fw:
-                            C.json.dump(data, fw, indent=3)
+                result = self.File_ops.save_data( self.website_entry.get(), self.email_entry.get(), self.password_entry.get())
+                if not result:
+                    C.messagebox.showerror(title="Error", message=C.DOMAIN_EXISTS_ERROR)
+                else:
                         self.website_entry.delete(0, C.END)
                         self.password_entry.delete(0, C.END)
                         C.messagebox.showinfo(title="Success", message=C.SAVE_SUCCESS)
@@ -84,16 +71,15 @@ class PasswordManager:
     def get_data(self) -> None:
         check_ok, message = self.validate_input(self.website_entry.get(), self.email_entry.get())
         if check_ok:
-            with open(r"Password_Manager\_assets\user_data.json", mode="r") as f:
-                data = C.json.load(f)
+            data_exists, email, password = self.File_ops.search_data(self.website_entry.get())
+            if data_exists:
                 self.email_entry.delete(0, C.END)
                 self.password_entry.delete(0, C.END)
-                try:
-                    self.email_entry.insert(0, data[self.website_entry.get()]["email"])
-                    self.password_entry.insert(0, data[self.website_entry.get()]["password"])
-                    C.messagebox.showinfo(title="Success", message=C.SUCCESS_GET)
-                except:
-                    C.messagebox.showerror(title="Error", message=C.NO_DATA)
+                self.email_entry.insert(0, email)
+                self.password_entry.insert(0, password)
+                C.messagebox.showinfo(title="Success", message=C.SUCCESS_GET)
+            else:
+                C.messagebox.showerror(title="Error", message=C.NO_DATA)
         else:
             C.messagebox.showerror(title="Error", message=message)
 

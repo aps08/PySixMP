@@ -39,6 +39,26 @@ class Hangman:
                 break
         C.sys.exit() if entry == C.ENTRY[0] else self.start() if entry == C.ENTRY[1] else ''
         
+    def start(self) -> None:
+        """ start() --> This function is responsible for running the game until you have lost all the lifes.
+        """
+        while len(self._chances) > 0:
+            self._clear()
+            print(C.HANGMANPICS[7-len(self._chances)])
+            print(f"\nLifes left : {self._chances}")
+            print(f"Guess the word: {''.join(self._blanks)}")
+            if self._used_alphabets:
+                print(f"Used alhpabets : {self._used_alphabets} ")
+            if self._give_hint:
+                print(f'HINT: {self._give_hint}')
+                print(C.INSTRUCTION[0])
+            else:
+                print(C.INSTRUCTION[1])
+            user_guess = C.m.getwche()
+            self.validate_anwer(user_guess)
+            C.time.sleep(1)
+        self.game_over()
+        
     def validate_anwer(self, user_entry: str) -> None:
         """ validate_anwer() --> This fucntion is responsible for validating the user input. 
         
@@ -85,26 +105,6 @@ class Hangman:
                 self._used_alphabets.append(user_entry)
             print(C.CORRECT_INCORRECT[1])
             self._chances.pop()                       
-        
-    def start(self) -> None:
-        """ start() --> This function is responsible for running the game until you have lost all the lifes.
-        """
-        while len(self._chances) > 0:
-            self._clear()
-            print(C.HANGMANPICS[7-len(self._chances)])
-            print(f"\nLifes left : {self._chances}")
-            print(f"Guess the word: {''.join(self._blanks)}")
-            if self._used_alphabets:
-                print(f"Used alhpabets : {self._used_alphabets} ")
-            if self._give_hint:
-                print(f'HINT: {self._give_hint}')
-                print(C.INSTRUCTION[0])
-            else:
-                print(C.INSTRUCTION[1])
-            user_guess = C.m.getwche()
-            self.validate_anwer(user_guess)
-            C.time.sleep(1)
-        self.game_over()
         
     def game_over(self) -> None:
         """ game_over() -> This function is responsible for showing game over instruction and the correct word.
