@@ -71,6 +71,8 @@ a{
     <div class="bg bg3"></div>
     <div class="container">
       <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+        {% comment %} using jinja 2 templating to populate the news {% endcomment %}
+        {% comment %} Start of FOR loop {% endcomment %}
         {% for key, value in data.items() %}
         {% for item in value %}
         <div class="col pt-2">
@@ -85,6 +87,7 @@ a{
         </div>
         {% endfor %}
         {% endfor %}
+        {% comment %} End of FOR loop {% endcomment %}
       </div>
     </div>
   </body>
