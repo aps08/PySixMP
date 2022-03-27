@@ -124,7 +124,7 @@ class FileOperations:
             str: return encrypted password as string.
         """
         encrypted_data = self.F.encrypt(bytes(string, encoding='utf-8'))
-        return str(encrypted_data)
+        return encrypted_data.decode('utf-8')
     
     def decrypt_data(self, string: str) -> str:
         """ decrypt_data() --> This function is responsible for decrypting the encrypted password.
