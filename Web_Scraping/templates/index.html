@@ -72,20 +72,18 @@ a{
     <div class="container">
       <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
         <!-- using jinja2 templating below to run for loop on dictionary-->
-        {% for key, value in data.items() %}
-        {% for item in value %}
+        {% for item in data %}
         <div class="col pt-2">
           <div class="p-2">
             <div class="card border border-success border-2">
             <div class="card-body">
               <!-- Populating the anchor tags using jinja templating-->
               <a target="_blank" href={{item[0]}} class="fw-bold fs-6 text-dark">{{item[1]}}</a>
-              <div class="text-success fs-6 fw-bold fst-italic">{{key}}</div>
+              <div class="text-success fs-6 fw-bold fst-italic">{{item[2]}}</div>
             </div>
           </div>
           </div>
         </div>
-        {% endfor %}
         {% endfor %}
         <!-- end of for loop-->
       </div>

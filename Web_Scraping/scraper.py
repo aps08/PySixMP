@@ -2,16 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 import random
 import threading
-import pandas as pd
-# import pand
+from difflib import SequenceMatcher
 # Some links for scraping the news.
 CRUNCHHYPE_URL = "https://www.crunchhype.com/"
 WIRED_URL = "https://www.wired.com/feed/google-latest-news/sitemap-google-news"
 NYTIMES_URL = "https://www.nytimes.com/sitemaps/new/news-1.xml.gz"
 THEVERGE_URL = "https://www.theverge.com/sitemaps/google_news"
-# Dictionary variable for storing results.
+# List variable for storing results.
 NEWS = list()
-
 
 def news() -> list:
     """ This the main function which uses all the below functions to get news data using muti-threading.
@@ -28,7 +26,10 @@ def news() -> list:
     wired_thread.run()
     nytimes_thread.run()
     theverge_thread.run()
-    filtered_data = deduplication(NEWS)
+    global NEWS
+    NEWS = NEWS[0:100]
+    filtered_data = deduplication_validate(NEWS)
+    random.shuffle(filtered_data)
     return filtered_data
 
 
@@ -38,7 +39,7 @@ def crunchhype_news() -> None:
     Soup = BeautifulSoup(requests.get(CRUNCHHYPE_URL).text, 'lxml')
     links = Soup.find_all(class_="entry-title-link")
     for link in links:
-        NEWS.append((link["href"], link["title"],"www.crunchhype.com"))
+        NEWS.append([link["href"], link["title"],"www.crunchhype.com"])
     random.shuffle(NEWS)
 
 def wired_news() -> None:
@@ -48,7 +49,7 @@ def wired_news() -> None:
     links = [link.text for link in Soup.findAll("loc")]
     titles = [title.text for title in Soup.findAll("news:title")]
     for link, title in zip(links, titles):
-        NEWS.append((link, title,"www.wired.com"))
+        NEWS.append([link, title,"www.wired.com"])
     random.shuffle(NEWS)
 
 def nytimes_news() -> None:
@@ -58,24 +59,32 @@ def nytimes_news() -> None:
     links = [link.text for link in Soup.findAll("loc")]
     titles = [title.text for title in Soup.findAll("news:title")]
     for link, title in zip(links, titles):
-        NEWS.append((link, title,"www.nytimes.com"))
+        NEWS.append([link, title,"www.nytimes.com"])
     random.shuffle(NEWS)
 
 def theverge_news() -> None:
     """ Web scraping news from theverge website.
     """
     Soup = BeautifulSoup(requests.get(THEVERGE_URL).text, 'lxml')
-    links = [link.text for link in Soup.findAll("loc")][0:6]
+    links = [link.text for link in Soup.findAll("loc")]
     titles = [title.text for title in Soup.findAll("news:title")]
     for link, title in zip(links, titles):
-        NEWS.append((link, title,"www.theverge.com"))
+        NEWS.append([link, title,"www.theverge.com"])
     random.shuffle(NEWS)
 
-def deduplication(unfiltered_data: list) -> pd.DataFrame:
-    dataframe = pd.DataFrame(unfiltered_data, columns=['Link', 'Title', 'Source'])
-    print(dataframe)
-    return dataframe
-    # resultant = []
-    # return resultant
-    
-d = news()
+def deduplication_validate(unfiltered_data: list) -> list:
+    _ratio, resultant_list = 0, []
+    length = len(unfiltered_data)
+    for i in range(length-1):
+        for j in range(i + 1, length):
+            _ratio = SequenceMatcher(None, unfiltered_data[i][1], unfiltered_data[j][1]).ratio()
+            if _ratio < 0.8:
+                resultant_list.append(unfiltered_data[i])
+    return remove_duplicates(resultant_list)
+
+def remove_duplicates(unfiltered_data) -> list:
+    new_data = []
+    for data in unfiltered_data:
+        if data not in new_data:
+            new_data.append(data)
+    return new_data
