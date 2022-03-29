@@ -1,7 +1,9 @@
 beautifulsoup4==4.10.0
+cryptography==36.0.2
 Flask==2.0.3
 PyDictionary==2.0.1
 pyperclip==1.8.2
 Random_Word==1.0.7
 requests==2.26.0
+spacy==3.2.3
 validators==0.18.2
