@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import random
 import threading
+import spacy
 from difflib import SequenceMatcher
 # Some links for scraping the news.
 CRUNCHHYPE_URL = "https://www.crunchhype.com/"
@@ -27,7 +28,7 @@ def news() -> list:
     nytimes_thread.run()
     theverge_thread.run()
     global NEWS
-    NEWS = NEWS[0:100]
+    NEWS = NEWS[0:50]
     filtered_data = deduplication_validate(NEWS)
     random.shuffle(filtered_data)
     return filtered_data
@@ -38,7 +39,7 @@ def crunchhype_news() -> None:
     """
     Soup = BeautifulSoup(requests.get(CRUNCHHYPE_URL).text, 'lxml')
     links = Soup.find_all(class_="entry-title-link")
-    for link in links:
+    for link in links[0:10]:
         NEWS.append([link["href"], link["title"],"www.crunchhype.com"])
     random.shuffle(NEWS)
 
@@ -46,8 +47,8 @@ def wired_news() -> None:
     """ Web scraping news from wired website.
     """
     Soup = BeautifulSoup(requests.get(WIRED_URL).text, 'lxml')
-    links = [link.text for link in Soup.findAll("loc")]
-    titles = [title.text for title in Soup.findAll("news:title")]
+    links = [link.text for link in Soup.findAll("loc")][0:10]
+    titles = [title.text for title in Soup.findAll("news:title")][0:10]
     for link, title in zip(links, titles):
         NEWS.append([link, title,"www.wired.com"])
     random.shuffle(NEWS)
@@ -56,8 +57,8 @@ def nytimes_news() -> None:
     """ Web scraping news from nytimes website.
     """
     Soup = BeautifulSoup(requests.get(NYTIMES_URL).text, 'lxml')
-    links = [link.text for link in Soup.findAll("loc")]
-    titles = [title.text for title in Soup.findAll("news:title")]
+    links = [link.text for link in Soup.findAll("loc")][0:10]
+    titles = [title.text for title in Soup.findAll("news:title")][0:10]
     for link, title in zip(links, titles):
         NEWS.append([link, title,"www.nytimes.com"])
     random.shuffle(NEWS)
@@ -66,20 +67,23 @@ def theverge_news() -> None:
     """ Web scraping news from theverge website.
     """
     Soup = BeautifulSoup(requests.get(THEVERGE_URL).text, 'lxml')
-    links = [link.text for link in Soup.findAll("loc")]
-    titles = [title.text for title in Soup.findAll("news:title")]
+    links = [link.text for link in Soup.findAll("loc")][0:10]
+    titles = [title.text for title in Soup.findAll("news:title")][0:10]
     for link, title in zip(links, titles):
         NEWS.append([link, title,"www.theverge.com"])
     random.shuffle(NEWS)
 
 def deduplication_validate(unfiltered_data: list) -> list:
+    spacy_en = spacy.load("en_core_web_sm")
     _ratio, resultant_list = 0, []
     length = len(unfiltered_data)
     for i in range(length-1):
         for j in range(i + 1, length):
-            _ratio = SequenceMatcher(None, unfiltered_data[i][1], unfiltered_data[j][1]).ratio()
+            first = spacy_en(unfiltered_data[i][1])
+            second = spacy_en(unfiltered_data[j][1])
+            _ratio = first.similarity(second)
             if _ratio < 0.8:
-                resultant_list.append(unfiltered_data[i])
+                resultant_list.append(unfiltered_data[j])
     return remove_duplicates(resultant_list)
 
 def remove_duplicates(unfiltered_data) -> list:
