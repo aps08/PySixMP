@@ -1,5 +1,7 @@
 import requests
 from ui_model import *
+
+
 # Getting data from the an API 
 json_data = requests.get("https://opentdb.com/api.php?amount=10").json()["results"]
 # This variable stores all the questions as an question model object

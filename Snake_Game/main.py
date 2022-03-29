@@ -2,6 +2,7 @@ from turtle import Screen, Terminator
 from helper import Snake, ScoreBoard, Food, Highscore
 import time
 
+
 class Snake_Game:
 
     def __init__(self) -> None:
