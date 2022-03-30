@@ -79,7 +79,7 @@ class Hangman:
                     self._chances.pop()
         elif user_entry.isalpha():
             self.replace_blank(user_entry)
-        if self._word.lower() == (''.join(self._blanks)).lower():
+        if self._word.lower() == (''.join(self._blanks)).lower().replace(' ',''):
             self._clear()
             print(C.WON_TEXT.format(len(self._chances)))
             self.retry()
