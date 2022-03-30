@@ -16,9 +16,15 @@ Before reading further, I suggest you to run the code and see how it works.
 WORD_OBJECT = RandomWords()
 # return random word
 def random_word() -> str:
+  result = False
   random_word = WORD_OBJECT.get_random_word()
   regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]-')
-  if regex.search(random_word) == None and random_word is not None and len(random_word) > 2:
+  try:
+    if regex.search(random_word) == None:
+      result = True
+  except:
+    result = False
+  if result and random_word is not None and len(random_word) > 2:
     return random_word
   else:
     random_word()

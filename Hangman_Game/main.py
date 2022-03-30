@@ -43,8 +43,10 @@ class Hangman:
     def start(self) -> None:
         """ start() --> This function is responsible for running the game until you have lost all the lifes.
         """
+        self._clear()
         while len(self._chances) > 0:
             self._clear()
+            print(self._word)
             print(C.HANGMANPICS[7-len(self._chances)])
             print(f"\nLifes left : {self._chances}")
             print(f"Guess the word: {''.join(self._blanks)}")
@@ -79,7 +81,7 @@ class Hangman:
                     self._chances.pop()
         elif user_entry.isalpha():
             self.replace_blank(user_entry)
-        if self._word.lower() == (''.join(self._blanks)).lower().replace(' ',''):
+        if self._word.lower() == ''.join(self._blanks).lower().replace(' ',''):
             self._clear()
             print(C.WON_TEXT.format(len(self._chances)))
             self.retry()
@@ -117,7 +119,7 @@ class Hangman:
         self._clear()
         print(C.GO_INSTRUCTION)
         print(f"The correct word was:  {self._word.upper()}")
-        print("\n\n")
+        print("\n")
         print(C.RETRY_INSTRUCTION)
         user_retry = C.m.getwche()
         self.__init__() if user_retry.upper() == "Y" else C.sys.exit(0)
