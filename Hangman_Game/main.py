@@ -118,6 +118,7 @@ class Hangman:
     def retry(self) -> None:
         """ retry() --> This function is responsible for checking if the user wants to play again or not.
         """
+        self._clear
         print(C.RETRY_INSTRUCTION)
         user_retry = C.m.getwche()
         self.__init__() if user_retry.upper() == "Y" else C.sys.exit(0)
