@@ -57,7 +57,7 @@ class Hangman:
                 print(C.INSTRUCTION[1])
             user_guess = C.m.getwche()
             self.validate_anwer(user_guess)
-            C.time.sleep(1)
+            C.time.sleep(0.5)
         self.retry()
         
     def validate_anwer(self, user_entry: str) -> None:
@@ -95,7 +95,7 @@ class Hangman:
         user_entry = user_entry.lower()
         if user_entry in self._used_alphabets:
             print(C.USED_TEXT)
-            C.time.sleep(1)
+            C.time.sleep(0.5)
         elif user_entry in self._word:
             for i in range(len(self._word)):
                 if user_entry == self._word[i]:

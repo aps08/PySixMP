@@ -5,6 +5,7 @@ import os
 import time
 import msvcrt as m
 import sys
+import re
 
 """
 This file contains import statements and some constants which you could use to customize interface and functionality of this code.
@@ -16,7 +17,11 @@ WORD_OBJECT = RandomWords()
 # return random word
 def random_word() -> str:
   random_word = WORD_OBJECT.get_random_word()
-  return random_word if random_word is not None and len(random_word) > 2 else random_word()
+  regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]-')
+  if regex.search(random_word) == None and random_word is not None and len(random_word) > 2:
+    return random_word
+  else:
+    random_word()
 
 # Number of lifes, incase you increase the number of lifes, please increate the graphics of HANGMANPICS variable.
 LIFES = 7
