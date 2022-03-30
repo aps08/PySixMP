@@ -46,7 +46,6 @@ class Hangman:
         self._clear()
         while len(self._chances) > 0:
             self._clear()
-            print(self._word)
             print(C.HANGMANPICS[7-len(self._chances)])
             print(f"\nLifes left : {self._chances}")
             print(f"Guess the word: {''.join(self._blanks)}")
