@@ -58,7 +58,7 @@ class Hangman:
             user_guess = C.m.getwche()
             self.validate_anwer(user_guess)
             C.time.sleep(1)
-        self.game_over()
+        self.retry()
         
     def validate_anwer(self, user_entry: str) -> None:
         """ validate_anwer() --> This fucntion is responsible for validating the user input. 
@@ -71,6 +71,8 @@ class Hangman:
             if user_entry == '0':
                 try:
                     self._give_hint = self._dictionary.meaning(self._word)["Noun"][0]
+                except IndexError:
+                    self._give_hint = C.NO_HINT_FOUND
                 except:
                     self._give_hint = C.NO_HINT_FOUND
                 finally:
@@ -107,19 +109,15 @@ class Hangman:
             print(C.CORRECT_INCORRECT[1])
             self._chances.pop()                       
         
-    def game_over(self) -> None:
-        """ game_over() -> This function is responsible for showing game over instruction and the correct word.
+        
+    def retry(self) -> None:
+        """ retry() --> This function is responsible for checking if the user wants to play again or not, 
+                        it also shows the correct answers.
         """
         self._clear()
         print(C.GO_INSTRUCTION)
         print(f"The correct word was:  {self._word.upper()}")
-        C.time.sleep(3)
-        self.retry()
-        
-    def retry(self) -> None:
-        """ retry() --> This function is responsible for checking if the user wants to play again or not.
-        """
-        self._clear()
+        print("\n\n")
         print(C.RETRY_INSTRUCTION)
         user_retry = C.m.getwche()
         self.__init__() if user_retry.upper() == "Y" else C.sys.exit(0)
