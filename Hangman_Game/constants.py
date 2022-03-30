@@ -21,7 +21,7 @@ def random_word() -> str:
 # Number of lifes, incase you increase the number of lifes, please increate the graphics of HANGMANPICS variable.
 LIFES = 7
 # If no hint is found from the dictionary
-NO_HINT_FOUND = "Sorry, but looks like we don't have any hint for this world."
+NO_HINT_FOUND = "No hints, found"
 # Text which is shown on winning
 WON_TEXT = "You Won!!!! with {} lives left."
 # Already used character warning

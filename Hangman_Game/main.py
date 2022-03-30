@@ -1,4 +1,3 @@
-from msilib.schema import Error
 import constants as C
 
 
@@ -66,13 +65,13 @@ class Hangman:
         
         Args:
             user_entry (str): This argument keep the value of user's guessed letter,
-                              on which the validation is performed.
+                              on which the validation ips performed.
         """
         if user_entry.isdigit() and self._give_hint is None:
             if user_entry == '0':
                 try:
                     self._give_hint = self._dictionary.meaning(self._word)["Noun"][0]
-                except Error:
+                except:
                     self._give_hint = C.NO_HINT_FOUND
                 finally:
                     self._chances.pop()
@@ -114,6 +113,7 @@ class Hangman:
         self._clear()
         print(C.GO_INSTRUCTION)
         print(f"The correct word was:  {self._word.upper()}")
+        C.time.sleep(3)
         self.retry()
         
     def retry(self) -> None:
