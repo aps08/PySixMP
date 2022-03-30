@@ -1,3 +1,4 @@
+from msilib.schema import Error
 import constants as C
 
 
@@ -71,7 +72,7 @@ class Hangman:
             if user_entry == '0':
                 try:
                     self._give_hint = self._dictionary.meaning(self._word)["Noun"][0]
-                except:
+                except Error:
                     self._give_hint = C.NO_HINT_FOUND
                 finally:
                     self._chances.pop()
@@ -110,7 +111,7 @@ class Hangman:
     def game_over(self) -> None:
         """ game_over() -> This function is responsible for showing game over instruction and the correct word.
         """
-        self._clear
+        self._clear()
         print(C.GO_INSTRUCTION)
         print(f"The correct word was:  {self._word.upper()}")
         self.retry()
@@ -118,7 +119,7 @@ class Hangman:
     def retry(self) -> None:
         """ retry() --> This function is responsible for checking if the user wants to play again or not.
         """
-        self._clear
+        self._clear()
         print(C.RETRY_INSTRUCTION)
         user_retry = C.m.getwche()
         self.__init__() if user_retry.upper() == "Y" else C.sys.exit(0)
