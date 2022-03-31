@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import random
 import threading
 import spacy
-from difflib import SequenceMatcher
+import lxml
 # Some links for scraping the news.
 CRUNCHHYPE_URL = "https://www.crunchhype.com/"
 WIRED_URL = "https://www.wired.com/feed/google-latest-news/sitemap-google-news"
