@@ -184,10 +184,10 @@ class Highscore:
         """
         self._data = None
         try :
-            with open("Snake_Game/high_score.txt", mode="r", encoding="utf-8") as f:
+            with open("Snake Game/high_score.txt", mode="r", encoding="utf-8") as f:
                 self._data = f.read()
         except :
-            with open("Snake_Game/high_score.txt", mode="w+", encoding="utf-8") as f:
+            with open("Snake Game/high_score.txt", mode="w+", encoding="utf-8") as f:
                 f.write("50")
                 self._data = 50
         f.close()
@@ -206,6 +206,6 @@ class Highscore:
         Args:
             highscore (int): stores high score
         """
-        with open("Snake_Game/high_score.txt", mode="w", encoding="utf-8") as f:
+        with open("Snake Game/high_score.txt", mode="w", encoding="utf-8") as f:
             f.write(f'{highscore}')
             f.close()

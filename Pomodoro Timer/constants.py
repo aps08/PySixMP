@@ -17,4 +17,4 @@ SHORT_BREAK_MIN = 5
 # Long break
 LONG_BREAK_MIN = 15
 # Raw url for background image
-PATH = r"pomodoro_timer/assets/tomato.png"
+PATH = r"Pomodoro Timer/assets/tomato.png"

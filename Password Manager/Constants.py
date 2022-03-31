@@ -33,11 +33,11 @@ TITLE = "Password Manager! 🔓🔓🔓"
 # backgorund color
 BG_COLOR = "lightgrey"
 # Path for Logo
-LOGO_PATH = r"Password_Manager\_assets\logo.png"
+LOGO_PATH = r"Password Manager\_assets\logo.png"
 # Path for json file
-FILE_PATH = r"Password_Manager\_assets\user_data.json"
+FILE_PATH = r"Password Manager\_assets\user_data.json"
 # Path for secret key file
-SECRET_KEY_PATH = r"Password_Manager\_assets\secret.key"
+SECRET_KEY_PATH = r"Password Manager\_assets\secret.key"
 # Error message if email is not valid.
 EMAIL_ERROR = "Doesn't look like a email. Try again."
 # Error message if domain is not valid.
