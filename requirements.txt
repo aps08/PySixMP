@@ -8,4 +8,4 @@ Random_Word==1.0.7
 requests==2.26.0
 spacy==3.2.3
 validators==0.18.2
-# Python Version = 3.9.11
+# Python Version=3.9.11
