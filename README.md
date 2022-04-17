@@ -8,12 +8,13 @@ PySixMP is collection of 6 python mini projects, from beginner to intermediate l
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
 ## Includes
-1. [Confused Lines](https://github.com/aps08/py25/tree/main/Confused%20lines)
-2. [Hangman Game](https://github.com/aps08/py25/tree/main/Hangman%20Game)
-3. [Snake Game](https://github.com/aps08/py25/tree/main/Snake%20Game)
-4. [Password Manager](https://github.com/aps08/py25/tree/main/Password%20Manager)
-5. [Promodoro Timer](https://github.com/aps08/py25/tree/main/Pomodoro%20Timer)
-6. [Quiz Game](https://github.com/aps08/py25/tree/main/Quiz%20Game)
+
+   [Confused Lines](https://github.com/aps08/py25/tree/main/Confused%20lines)
+   [Hangman Game](https://github.com/aps08/py25/tree/main/Hangman%20Game)
+   [Snake Game](https://github.com/aps08/py25/tree/main/Snake%20Game)
+   [Password Manager](https://github.com/aps08/py25/tree/main/Password%20Manager)
+   [Promodoro Timer](https://github.com/aps08/py25/tree/main/Pomodoro%20Timer)
+   [Quiz Game](https://github.com/aps08/py25/tree/main/Quiz%20Game)
 
 ## [Demo](https://www.youtube.com)
 
