@@ -6,4 +6,4 @@
 3. The lines can turn in all 4 directions and can move 50 or 100 pixel randomly.
 4. You can change the directions, message, font-style etc, form the ```constants.py``` file.
 
-[Demo](https://github.com/aps08/py25/assets/confusedlines.gif)
+![Demo](https://github.com/aps08/py25/assets/confusedlines.gif)
