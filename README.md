@@ -1,3 +1,4 @@
-# py7
-# Documentation not completed
-# 7 completed
+
+# PySixMP
+
+PySixMP is collection of 6 python mini projects, from beginner to intermediate level.
