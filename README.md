@@ -14,7 +14,7 @@ PySixMP is collection of 6 python mini projects, from beginner to intermediate l
 5. Promodoro Timer
 6. Quiz Game
 
-You can find the demo of these projects [here](https:/www./youtube.com)
+## [Demo](https://www.youtube.com)
 
  ## Connect
 <p>
