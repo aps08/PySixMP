@@ -7,4 +7,4 @@
 4. You can change the directions, message, font-style etc, form the ```constants.py``` file.
 
 # Short Demo
-<img src="https://github.com/aps08/py25/blob/main/assets/confusedlines.gif" width="100" height="100">
+<img src="https://github.com/aps08/py25/blob/main/assets/confusedlines.gif" width="100" height="100%">
